@@ -7,7 +7,7 @@
 
 # Install
 
-- Install ```x11docker```, ```docker``` first
+- Install ```x11docker```, ```docker``` and ```aria2c``` first
 - After that,clone this repo
 ```sh
 git clone https://github.com/coolnsx/desktop-in-docker
