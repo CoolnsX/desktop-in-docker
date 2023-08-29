@@ -3,7 +3,7 @@
 - This is my attempt to make a Virtualised Desktop which is having a limited and controlled access to main system, while still be able to be light on resources compared to KVM
 - It uses Debian:testing as base Image and installs VS-Code, Firefox and upwork, so that I can quickly build Image and start development in a containerized environment.
 - It uses the [x11docker](https://github.com/mviereck/x11docker), which create a sandbox X11 environment and focuses on security
-    - Now you ask, why not [distrobox](https://github.com/89luca89/distrobox)?, It's because it has tight integration with host, and It does not have sandbox feature yet,it's in WIP though => (Link)[https://github.com/89luca89/distrobox/issues/28]
+    - Now you ask, why not [distrobox](https://github.com/89luca89/distrobox)?, It's because it has tight integration with host, and It does not have sandbox feature yet,it's in WIP though => [Link](https://github.com/89luca89/distrobox/issues/28)
 
 # Install
 
