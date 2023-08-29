@@ -19,6 +19,6 @@ chmod +x build.sh
 - Above instruction will build an Image named coolans:latest
 - Then after that use this command, to run virtualized desktop
 ```sh
-setsid -f x11docker $@ --desktop --size 1920x1080 -c -I --home="$HOME/x11docker" --user=tanveer --limit='0.0' --dbus coolans
+setsid -f x11docker $@ --desktop --size 1920x1080 -c -I --home="$HOME/x11docker" --user=$USER --limit='0.0' --dbus coolans
 ```
 - All the x11docker arguments are explained in x11docker repo's readme, please give it a good reading to start abusing x11docker :)
