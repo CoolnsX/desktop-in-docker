@@ -11,13 +11,13 @@ DEBIAN_FRONTEND=noninteractive apt upgrade -y --no-install-recommends \
 	btop \
 	gpg \
 	gpg-agent \
-	x11-xserver-utils \
 	ca-certificates \
 	libcurl3-gnutls \
 	libsecret-1-0 \
 	libu2f-udev \
-	x11-utils \
-	firefox-esr \
+	xclip \
+	bat \
+	firefox \
 	libxss1 \
 	libgdk-pixbuf2.0-0 \
 	xfce4 \
@@ -34,13 +34,13 @@ DEBIAN_FRONTEND=noninteractive apt upgrade -y --no-install-recommends \
 	libxv1 \
 	mesa-utils \
 	mesa-utils-extra && \
-	apt install -y materia-gtk-theme papirus-icon-theme && \
+	apt install -y x11-utils x11-xserver-utils materia-gtk-theme papirus-icon-theme && \
 	sed -i 's%<property name="ThemeName" type="string" value="Xfce"/>%<property name="ThemeName" type="string" value="Raleigh"/>%' /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml \
-	&& apt-get clean \
+	&& apt clean \
 	&& rm -rf /var/lib/apt/lists/*
 
-#install upwork and code
-[ -f "/tmp/upwork.deb" ] && apt install "/tmp/upwork.deb" -y
-[ -f "/tmp/code.deb" ] && apt install "/tmp/code.deb" -y
+#install *.deb in /tmp/ directory
+apt install -y /tmp/*.deb
+rm -rf /tmp/*.deb
 
 exit 0
