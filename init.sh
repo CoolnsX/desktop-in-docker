@@ -2,13 +2,16 @@
 
 #This is an init.sh file that has all the commands to build the container I want
 
+#firefox
+
 apt update
-apt-mark hold iptables
 DEBIAN_FRONTEND=noninteractive apt upgrade -y --no-install-recommends \
-	dbus-x11 \
+	at-spi2-core \
 	libvulkan1 \
 	xdg-utils \
+	iputils-ping \
 	btop \
+	locales \
 	gpg \
 	gpg-agent \
 	ca-certificates \
@@ -17,7 +20,9 @@ DEBIAN_FRONTEND=noninteractive apt upgrade -y --no-install-recommends \
 	libu2f-udev \
 	xclip \
 	bat \
+	fzf \
 	firefox \
+	xdotool \
 	libxss1 \
 	libgdk-pixbuf2.0-0 \
 	xfce4 \
@@ -29,18 +34,15 @@ DEBIAN_FRONTEND=noninteractive apt upgrade -y --no-install-recommends \
 	neovim \
 	neofetch \
 	openssh-client \
+	libappindicator3-1 \
 	xfce4-terminal \
 	curl \
 	libxv1 \
+	libva-drm2 \
 	mesa-utils \
 	mesa-utils-extra && \
-	apt install -y x11-utils x11-xserver-utils materia-gtk-theme papirus-icon-theme && \
+	apt install -y zsh-static zsh-syntax-highlighting dbus-x11 x11-utils x11-xserver-utils materia-gtk-theme papirus-icon-theme && \
 	sed -i 's%<property name="ThemeName" type="string" value="Xfce"/>%<property name="ThemeName" type="string" value="Raleigh"/>%' /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml \
 	&& apt clean \
-	&& rm -rf /var/lib/apt/lists/*
-
-#install *.deb in /tmp/ directory
-apt install -y /tmp/*.deb
-rm -rf /tmp/*.deb
-
-exit 0
+	&& rm -rf /var/lib/apt/lists/* &&
+	curl -sS https://starship.rs/install.sh -o /tmp/install.sh && sh /tmp/install.sh -y && rm /tmp/install.sh && apt install -y /tmp/*.deb && rm -rf /tmp/*.deb

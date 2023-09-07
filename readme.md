@@ -5,6 +5,8 @@
 - It uses the [x11docker](https://github.com/mviereck/x11docker), which create a sandbox X11 environment and focuses on security
     - Now you ask, why not [distrobox](https://github.com/89luca89/distrobox)?, It's because it has tight integration with host, and It does not have sandbox feature yet,it's in WIP though => [Link](https://github.com/89luca89/distrobox/issues/28)
 
+Note : After researching about rootless container, I found it more better approach, so now the build.sh will try to go with podman which is preferred for rootless container (docker can do rootless too).
+
 # Install
 
 - Install ```x11docker```, ```docker``` and ```aria2c``` first
@@ -13,12 +15,20 @@
 git clone https://github.com/coolnsx/desktop-in-docker
 cd desktop-in-docker
 chmod +x build.sh
-./build.sh
+./build.sh "<your_image_name>" #passing nothing will use 'coolans' as imagename
 ```
 
 - Above instruction will build an Image named coolans:latest
-- Then after that use this command, to run virtualized desktop
+- Build.sh recommends rootless containers so it would defaults to podman, but if you use docker then it will shift to that.
+- Then after that use this command, to run virtualized desktop (keep in mind, some of the args passed here with x11docker are not recommended and are against the philosophy of x11docker, as some of them degrades container Isolation, read more about it on x11docker readme)
+
 ```sh
-setsid -f x11docker $@ --desktop --size 1920x1080 -c -I --home="$HOME/x11docker" --user=$USER --limit='0.0' --dbus coolans
+#for docker(can be run with rootless docker too)
+setsid -f x11docker $@ --desktop -g --xwayland --size '1920x1080' --shell=/bin/zsh -c -I --lang=$LANG --home="$HOME/x11docker" --limit='1.0' --dbus=system -- --cap-add=SYS_ADMIN --cap-add=SYS_CHROOT -- coolans #replace 'coolans', if you set the image name
+
+#for podman with rootless
+setsid -f x11docker $@ --backend=podman --rootless --runtime=crun --shell=/bin/zsh --lang=$LANG --desktop -g --xwayland --size '1920x1080' -c -I --home="$HOME/x11docker" --limit='1.0' --dbus=system -- --cap-add=SYS_CHROOT -- coolans #replace 'coolans', if you set the image name
 ```
+
 - All the x11docker arguments are explained in x11docker repo's readme, please give it a good reading to start abusing x11docker :)
+- Going with command is best if you want to use Electron apps without root
