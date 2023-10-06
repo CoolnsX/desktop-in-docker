@@ -2,8 +2,6 @@
 
 #This is an init.sh file that has all the commands to build the container I want
 
-#firefox
-
 apt update
 DEBIAN_FRONTEND=noninteractive apt upgrade -y --no-install-recommends \
 	at-spi2-core \
@@ -40,9 +38,14 @@ DEBIAN_FRONTEND=noninteractive apt upgrade -y --no-install-recommends \
 	libxv1 \
 	libva-drm2 \
 	mesa-utils \
-	mesa-utils-extra && \
-	apt install -y zsh-static zsh-syntax-highlighting dbus-x11 x11-utils x11-xserver-utils materia-gtk-theme papirus-icon-theme && \
-	sed -i 's%<property name="ThemeName" type="string" value="Xfce"/>%<property name="ThemeName" type="string" value="Raleigh"/>%' /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml \
+	mesa-utils-extra \
+	&& apt install -y zsh-static zsh-syntax-highlighting dbus-x11 x11-utils x11-xserver-utils materia-gtk-theme papirus-icon-theme \
 	&& apt clean \
-	&& rm -rf /var/lib/apt/lists/* &&
-	curl -sS https://starship.rs/install.sh -o /tmp/install.sh && sh /tmp/install.sh -y && rm /tmp/install.sh && apt install -y /tmp/*.deb && rm -rf /tmp/*.deb
+	&& apt purge systemd systemd-dev gstreamer1.0-plugins-base gstreamer1.0-gl -y \
+	&& apt autoremove -y \
+	&& rm -rf /var/lib/apt/lists/* \
+	&& curl -sS https://starship.rs/install.sh -o /tmp/install.sh \
+	&& sh /tmp/install.sh -y \
+	&& rm /tmp/install.sh \
+	&& apt install -y /tmp/*.deb \
+	&& rm -rf /tmp/*.deb

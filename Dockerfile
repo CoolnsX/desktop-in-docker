@@ -15,7 +15,6 @@ RUN init.sh
 #required if you want to show glyphs in terminals
 RUN locale-gen en_US.UTF-8
 ENV LANG=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
 
 #main command whenever container starts up
 CMD ["startxfce4"]
