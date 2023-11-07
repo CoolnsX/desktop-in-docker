@@ -8,7 +8,8 @@ print (){
 }
 
 cleanup() {
-	rm ./*.aria2 ./*.deb > /dev/null 2>&1
+	rm -f ./*.aria2 ./*.deb > /dev/null 2>&1
+	return 0
 }
 
 engine="podman"
