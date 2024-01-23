@@ -32,3 +32,37 @@ setsid -f x11docker $@ --backend=podman --rootless --runtime=crun --shell=/bin/z
 
 - All the x11docker arguments are explained in x11docker repo's readme, please give it a good reading to start abusing x11docker :)
 - Going with command is best if you want to use Electron apps without root
+
+## Using Alternate method
+
+- Recently I have Figured out how x11docker works, so I have taken inspiration from it and wrote my own script 
+
+```sh
+#!/bin/sh
+
+#this sets the port which makes the Xwayland run on other DISPLAY=:$port, you can change it to any number
+port="1"
+
+#runs the Xwayland with some extension to help run the virtual desktop better
+Xwayland :$port -ac +extension RANDR \
+  +extension RENDER \
+  +extension GLX \
+  +extension XVideo \
+  +extension DOUBLE-BUFFER \
+  +extension SECURITY \
+  +extension DAMAGE \
+  +extension X-Resource \
+  +extension Composite +extension COMPOSITE \
+  -dpms -s off & >/dev/null
+
+# note the PID to make sure the Xwayland is killed after the docker container is stopped
+PID=$!
+
+trap "kill $PID" INT HUP
+
+#main docker command
+docker run --rm --net=host -e DISPLAY=:$port -e LANG=$LANG -e container=podman -e HOME=$HOME -e SHELL=$SHELL -e USER=$USER -v $HOME/x11docker:/home/tanveer -v /usr/share/fonts/TTF:/usr/share/fonts/TTF -v /tmp/.X11-unix/X$port:/tmp/.X11-unix/X$port -e XSOCKET=/tmp/.X11-unix/X$port --name coolans_docker coolans
+
+#just for cleanup
+kill $PID
+```

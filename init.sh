@@ -27,7 +27,6 @@ DEBIAN_FRONTEND=noninteractive apt upgrade -y --no-install-recommends \
 	aria2 \
 	xfce4-screenshooter \
 	xfce4-whiskermenu-plugin \
-	fonts-roboto \
 	git \
 	neovim \
 	neofetch \

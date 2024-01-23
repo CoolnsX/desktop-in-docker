@@ -13,10 +13,12 @@ COPY *.deb /tmp/
 RUN init.sh
 
 #required if you want to show glyphs in terminals
-RUN locale-gen en_US.UTF-8
+RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+RUN locale-gen
+RUN echo "LANG=en_US.UTF-8" > /etc/locale.conf
 ENV LANG=en_US.UTF-8
 
 #main command whenever container starts up
-CMD ["startxfce4"]
+CMD ["dbus-launch","--exit-with-session","startxfce4"]
 ###########################################
 
