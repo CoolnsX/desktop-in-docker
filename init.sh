@@ -47,5 +47,8 @@ DEBIAN_FRONTEND=noninteractive apt upgrade -y --no-install-recommends \
 	&& curl -sS https://starship.rs/install.sh -o /tmp/install.sh \
 	&& sh /tmp/install.sh -y \
 	&& rm /tmp/install.sh \
+	&& echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
+	&& locale-gen \
+	&& echo "LANG=en_US.UTF-8" > /etc/locale.conf \
 	&& apt install -y /tmp/*.deb \
 	&& rm -rf /tmp/*.deb
