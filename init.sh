@@ -16,6 +16,7 @@ DEBIAN_FRONTEND=noninteractive apt upgrade -y --no-install-recommends \
 	libcurl3-gnutls \
 	libsecret-1-0 \
 	libu2f-udev \
+	fonts-roboto \
 	xclip \
 	bat \
 	fzf \
