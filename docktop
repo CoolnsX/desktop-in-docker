@@ -1,0 +1,22 @@
+#!/bin/sh
+
+
+port="1"
+Xwayland :$port -ac +extension RANDR \
+  +extension RENDER \
+  +extension GLX \
+  +extension XVideo \
+  +extension DOUBLE-BUFFER \
+  +extension SECURITY \
+  +extension DAMAGE \
+  +extension X-Resource \
+  +extension Composite +extension COMPOSITE \
+  -dpms -s off & >/dev/null
+
+PID=$!
+
+trap "kill $PID" INT HUP
+
+docker run --rm --net=host -e DISPLAY=:$port -e LANG=$LANG -e container=podman -e HOME=$HOME -e SHELL=$SHELL -e USER=$USER -v $HOME/x11docker:/home/tanveer -v /usr/share/fonts/TTF:/usr/share/fonts/TTF -v /tmp/.X11-unix/X$port:/tmp/.X11-unix/X$port -e XSOCKET=/tmp/.X11-unix/X$port --name coolans_docker coolans
+
+kill $PID
